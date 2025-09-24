@@ -1,0 +1,257 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --scanline-color: rgba(255,255,255,0.06);
+}
+
+@keyframes scanlines-move {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 0 8px, 0 0; }
+}
+
+@keyframes neon-sweep-green {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* wrapper que cria uma borda animada tipo shine, sem interceptar cliques */
+.neon-frame {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  isolation: isolate;
+}
+.neon-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  border-radius: 18px;
+  background: linear-gradient(90deg,
+    rgba(0,0,0,0) 0%,
+    #0aff9d 20%,
+    #15ff00 40%,
+    #00ff7f 60%,
+    rgba(0,0,0,0) 80%
+  );
+  background-size: 200% 100%;
+  animation: neon-sweep-green 3.2s linear infinite;
+  -webkit-mask: 
+    linear-gradient(#000 0 0) content-box, 
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+}
+.neon-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  box-shadow: 0 0 24px rgba(0, 255, 127, 0.35) inset, 
+              0 0 36px rgba(0, 255, 127, 0.25);
+  pointer-events: none;
+  z-index: 0;
+}
+@layer utilities {
+  .glitch-title-strong {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .glitch-title-strong::before,
+  .glitch-title-strong::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .glitch-title-strong::before {
+    animation: glitch-anim-1 3s infinite linear alternate-reverse;
+    color: #ff0040;
+    z-index: -1;
+  }
+  
+  .glitch-title-strong::after {
+    animation: glitch-anim-2 3s infinite linear alternate-reverse;
+    color: #00ff40;
+    z-index: -2;
+  }
+
+  .glitch-text-red {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .glitch-text-red::before,
+  .glitch-text-red::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .glitch-text-red::before {
+    animation: glitch-anim-red-1 3s infinite linear alternate-reverse;
+    color: #ff6666;
+    z-index: -1;
+  }
+  
+  .glitch-text-red::after {
+    animation: glitch-anim-red-2 3s infinite linear alternate-reverse;
+    color: #ff0000;
+    z-index: -2;
+  }
+  
+  @keyframes glitch-anim-red-1 {
+    0% { transform: translate(0) }
+    10% { transform: translate(-1px, -0.5px) }
+    20% { transform: translate(1px, 0.5px) }
+    30% { transform: translate(-0.5px, 1px) }
+    40% { transform: translate(0.5px, -0.5px) }
+    50% { transform: translate(-0.5px, 1px) }
+    60% { transform: translate(1px, 0.5px) }
+    70% { transform: translate(-1px, 0.5px) }
+    80% { transform: translate(-0.5px, -0.5px) }
+    90% { transform: translate(1px, 1px) }
+    100% { transform: translate(0.5px, -1px) }
+  }
+  
+  @keyframes glitch-anim-red-2 {
+    0% { transform: translate(0) }
+    10% { transform: translate(1px, 0.5px) }
+    20% { transform: translate(-1px, -0.5px) }
+    30% { transform: translate(0.5px, 1px) }
+    40% { transform: translate(-0.5px, -1px) }
+    50% { transform: translate(0.5px, -0.5px) }
+    60% { transform: translate(-1px, 0.5px) }
+    70% { transform: translate(1px, -1px) }
+    80% { transform: translate(0.5px, 1px) }
+    90% { transform: translate(-1px, -0.5px) }
+    100% { transform: translate(-0.5px, 1px) }
+  }
+  
+  @keyframes glitch-anim-1 {
+    0% { transform: translate(0) }
+    10% { transform: translate(-2px, -1px) }
+    20% { transform: translate(2px, 1px) }
+    30% { transform: translate(-1px, 2px) }
+    40% { transform: translate(1px, -1px) }
+    50% { transform: translate(-1px, 2px) }
+    60% { transform: translate(2px, 1px) }
+    70% { transform: translate(-2px, 1px) }
+    80% { transform: translate(-1px, -1px) }
+    90% { transform: translate(2px, 2px) }
+    100% { transform: translate(1px, -2px) }
+  }
+  
+  @keyframes glitch-anim-2 {
+    0% { transform: translate(0) }
+    10% { transform: translate(2px, 1px) }
+    20% { transform: translate(-2px, -1px) }
+    30% { transform: translate(1px, 2px) }
+    40% { transform: translate(-1px, -2px) }
+    50% { transform: translate(1px, -1px) }
+    60% { transform: translate(-2px, 1px) }
+    70% { transform: translate(2px, -2px) }
+    80% { transform: translate(1px, 2px) }
+    90% { transform: translate(-2px, -1px) }
+    100% { transform: translate(-1px, 2px) }
+  }
+
+  .matrix-bg {
+    background-image: 
+      linear-gradient(0deg, transparent 24%, rgba(123, 251, 78, 0.05) 25%, rgba(123, 251, 78, 0.05) 26%, transparent 27%, transparent 74%, rgba(123, 251, 78, 0.05) 75%, rgba(123, 251, 78, 0.05) 76%, transparent 77%, transparent),
+      linear-gradient(90deg, transparent 24%, rgba(123, 251, 78, 0.05) 25%, rgba(123, 251, 78, 0.05) 26%, transparent 27%, transparent 74%, rgba(123, 251, 78, 0.05) 75%, rgba(123, 251, 78, 0.05) 76%, transparent 77%, transparent);
+    background-size: 20px 20px;
+  }
+
+  .terminal-cursor::after {
+    content: '▋';
+    color: #7bfb4e;
+    animation: blink 1s infinite;
+  }
+
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
+  .scroll-indicator {
+    animation: bounce 2s infinite;
+  }
+  
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+  }
+
+  .seven-segment {
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+    border: 2px solid #333;
+    border-radius: 8px;
+    box-shadow: 
+      inset 0 0 10px rgba(123, 251, 78, 0.1),
+      0 0 20px rgba(123, 251, 78, 0.2);
+    text-shadow: 
+      0 0 10px #7bfb4e,
+      0 0 20px #7bfb4e,
+      0 0 30px #7bfb4e;
+  }
+
+  .animate-shine {
+    animation: shine var(--duration, 14s) ease-in-out infinite;
+  }
+
+  /* Isolar layout/pintura do bloco para o resto da página */
+  .terminal-contain {
+    contain: layout paint;
+    transform: translateZ(0);
+  }
+
+  /* Evitar ligaduras que alterem largura em mono */
+  .mono-stable {
+    font-variant-ligatures: none;
+    letter-spacing: 0; /* garantir largura previsível */
+  }
+
+  .shimmer-button {
+    background: linear-gradient(
+      45deg,
+      #7bfb4e 0%,
+      #ffffff 50%,
+      #7bfb4e 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  @keyframes shine {
+    0% {
+      background-position: 0% 0%;
+    }
+    50% {
+      background-position: 100% 100%;
+    }
+    100% {
+      background-position: 0% 0%;
+    }
+  }
+}
